@@ -34,8 +34,9 @@ class PointsSDK {
     }
   }
 
-  async registerProject(apiKey: string, campaignId: string): Promise<{ apiKey: string, campaignId: string }> {
+  async registerProject(apiKey: string): Promise<{ apiKey: string, campaignId: string }> {
     try {
+      const campaignId = generateApiKey({ length: 16 }) as string;
       const result = await this.pool.query(
         'INSERT INTO ProjectTable (api_key, campaign_id) VALUES ($1, $2) ON CONFLICT DO NOTHING RETURNING api_key, campaign_id',
         [apiKey, campaignId]
