@@ -75,7 +75,7 @@ class PointsSDK {
     try {
         const { timestamp, metadata } = eventData;
         await this.pool.query(
-            'INSERT INTO event_table (api_key, event_name, timestamp, metadata) VALUES ($1, $2, $3, $4) ON CONFLICT (api_key, event_name) DO UPDATE SET timestamp = EXCLUDED.timestamp, metadata = EXCLUDED.metadata;',
+            'INSERT INTO event_table (api_key, event_name, timestamp, metadata) VALUES ($1, $2, $3, $4) ON CONFLICT (event_name) DO UPDATE SET timestamp = EXCLUDED.timestamp, metadata = EXCLUDED.metadata;',
             [apiKey, eventName, timestamp, metadata]
         );
     } catch (err: any) {
